@@ -19,11 +19,19 @@ public class CreateDungeon : MonoBehaviour
     void BSP(Leaf leaf, int splitDepth)
     {
         if (leaf == null) return;
-        if (splitDepth <= 0) return;
-        if (leaf.Split(splitDepth))
+        if (splitDepth <= 0)
+        {
+            leaf.Draw(0);
+            return;
+        }
+        if (leaf.Split())
         {
             BSP(leaf.leftChild, splitDepth - 1);
             BSP(leaf.rightChild, splitDepth - 1);
+        }
+        else
+        {
+            leaf.Draw(0);
         }
     }
 

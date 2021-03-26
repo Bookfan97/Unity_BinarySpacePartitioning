@@ -5,6 +5,7 @@ using UnityEngine;
 public class Leaf
 {
     private int xPos, zPos, width, depth, scale;
+    int roomMin=5;
     public Leaf leftChild, rightChild;
     public Leaf(int x, int z, int w, int d, int s)
     {
@@ -15,22 +16,33 @@ public class Leaf
         scale = s;
     }
 
-    public bool Split(int level)
+    public bool Split()
     {
-        if (Random.Range(0, 100)<50)
+        if (width <= roomMin || depth <= roomMin) return false;
+        bool splitHorizontal = Random.Range(0, 100)<50;
+        if (width>depth && width/depth >= 1.2)
         {
-            int l1depth = Random.Range((int) (depth * 0.1f), (int) (depth * 0.7f));
+            splitHorizontal = false;
+        }
+        else if(depth>width && depth/width >= 1.2)
+        {
+            splitHorizontal = true;
+        }
+
+        int max = (splitHorizontal) ? depth : width - roomMin;
+        if (max <= roomMin) return false;
+        if (splitHorizontal)
+        {
+            int l1depth = Random.Range(roomMin, max);
             leftChild = new Leaf(xPos, zPos, width, l1depth, scale);
             rightChild = new Leaf(xPos, zPos + l1depth, width, depth - l1depth, scale);
         }
         else
         {
-            int l1width = Random.Range((int) (depth * 0.1f), (int) (depth * 0.7f));
+            int l1width = Random.Range(roomMin, max);
             leftChild = new Leaf(xPos, zPos, l1width, depth, scale);
             rightChild = new Leaf(xPos+l1width, zPos , width - l1width,  depth, scale);
         }
-       leftChild.Draw(level);
-       rightChild.Draw(level);
         return true;
     }
     
