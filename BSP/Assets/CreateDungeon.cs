@@ -24,6 +24,7 @@ public class CreateDungeon : MonoBehaviour
         root = new Leaf(0, 0, mapWidth, mapDepth, scale);
         BSP(root, 6);
         AddCorridors();
+        AddRandomCorridors(10);
         DrawMap();
     }
 
@@ -99,6 +100,25 @@ public class CreateDungeon : MonoBehaviour
                     (int) corridorList[i-1].x, 
                     (int) corridorList[i].y
                 );
+            }
+        }
+    }
+
+    void AddRandomCorridors(int numHalls)
+    {
+        for (int i = 0; i < numHalls; i++)
+        {
+            int startX = Random.Range(5, mapWidth - 5);
+            int startZ = Random.Range(5, mapDepth - 5);
+            int lengthX = Random.Range(5, mapWidth - 5);
+            int lengthZ = Random.Range(5, mapDepth - 5);
+            if (Random.Range(0,100) < 50)
+            {
+                line(startX, startZ, lengthX, startZ);
+            }
+            else
+            {
+                line(startX, startZ, startX, lengthZ);
             }
         }
     }

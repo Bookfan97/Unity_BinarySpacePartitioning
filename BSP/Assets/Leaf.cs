@@ -59,10 +59,10 @@ public class Leaf
                 cube.GetComponent<Renderer>().material.SetColor("_Color", color);
             }
         }*/
-        
-        for (int x = xPos+1; x < width+xPos-1; x++)
+        int wallSize = Random.Range(1, 3);
+        for (int x = xPos + wallSize; x < width+xPos-wallSize; x++)
         {
-            for (int z = zPos+1; z < depth+zPos-1; z++)
+            for (int z = zPos + wallSize; z < depth+zPos-wallSize; z++)
             {
                 map[x, z] = 0;
             }
