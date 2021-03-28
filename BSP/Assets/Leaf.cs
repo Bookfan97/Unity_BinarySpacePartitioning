@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Leaf
 {
-    private int xPos, zPos, width, depth, scale;
+    public int xPos, zPos, width, depth, scale;
     int roomMin=5;
     public Leaf leftChild, rightChild;
     public Leaf(int x, int z, int w, int d, int s)
@@ -46,17 +46,25 @@ public class Leaf
         return true;
     }
     
-    public void Draw(int level)
+    public void Draw(byte[,] map)
     {
-        Color color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
-        for (int x = xPos; x < width+xPos; x++)
+        /*Color color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+        for (int x = xPos; x < width + xPos; x++)
         {
-            for (int z = zPos; z < depth+zPos; z++)
+            for (int z = zPos; z < depth + zPos; z++)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                cube.transform.position = new Vector3(x * scale, level * 3, z * scale);
+                cube.transform.position = new Vector3(x * scale, 0, z * scale);
                 cube.transform.localScale = new Vector3(scale, scale, scale);
                 cube.GetComponent<Renderer>().material.SetColor("_Color", color);
+            }
+        }*/
+        
+        for (int x = xPos+1; x < width+xPos-1; x++)
+        {
+            for (int z = zPos+1; z < depth+zPos-1; z++)
+            {
+                map[x, z] = 0;
             }
         }
     }
